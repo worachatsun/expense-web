@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode } from "react";
 import { Th } from "./Th";
 import { Td } from "./Td";
+import { nanoid } from "nanoid";
 
 interface Props {
   headers: string[];
@@ -20,7 +21,7 @@ const Table: FunctionComponent<Props> = ({
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           {headers.map((header) => (
-            <Th key={header} scope="col">
+            <Th key={header + nanoid()} scope="col">
               {header}
             </Th>
           ))}
@@ -28,26 +29,24 @@ const Table: FunctionComponent<Props> = ({
       </thead>
       <tbody>
         {rows.map(({ key, cols }) => (
-          <>
-            <tr
-              key={key}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-            >
-              <Td>
-                <input
-                  data-testid={key}
-                  type="checkbox"
-                  aria-checked={checkedList.has(key)}
-                  defaultChecked={checkedList.has(key)}
-                  onChange={() => onChecked(key)}
-                  className="accent-pink-500"
-                />
-              </Td>
-              {cols.map((col) => (
-                <Td key={key}>{col}</Td>
-              ))}
-            </tr>
-          </>
+          <tr
+            key={key}
+            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          >
+            <Td>
+              <input
+                data-testid={key}
+                type="checkbox"
+                aria-checked={checkedList.has(key)}
+                defaultChecked={checkedList.has(key)}
+                onChange={() => onChecked(key)}
+                className="accent-pink-500"
+              />
+            </Td>
+            {cols.map((col) => (
+              <Td key={col + nanoid()}>{col}</Td>
+            ))}
+          </tr>
         ))}
       </tbody>
     </table>
