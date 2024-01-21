@@ -6,6 +6,14 @@ import { MODAL_TYPES } from "../../components/core/Modal/constants";
 import { useModalContext } from "../../hooks/useModalContext";
 import { ExpenseModalContent } from "./ExpenseModalContent";
 
+export interface RowProps {
+  key: string;
+  checkbox: JSX.Element;
+  item: string;
+  category: string;
+  amount: string;
+}
+
 const Landing: FunctionComponent = () => {
   const { setIsOpen } = useModalContext();
   const onAddExoenseClicked = useCallback(
@@ -13,7 +21,31 @@ const Landing: FunctionComponent = () => {
     [setIsOpen]
   );
 
-  const ExpenseTable = () => useMemo(() => <Table />, []);
+  const ExpenseTable = () =>
+    useMemo(() => {
+      const headers: string[] = ["", "Items", "Category", "Amount"];
+      const rows = [
+        {
+          key: "checkbox",
+          cols: [
+            <input type="checkbox" className="accent-pink-500" checked />,
+            "Whiskers Cat food",
+            "Food",
+            "10$",
+          ],
+        },
+        {
+          key: "checkbox",
+          cols: [
+            <input type="checkbox" className="accent-pink-500" checked />,
+            "Whiskers Cat food",
+            "Food",
+            "10$",
+          ],
+        },
+      ];
+      return <Table rows={rows} headers={headers} />;
+    }, []);
 
   return (
     <>
