@@ -2,9 +2,6 @@ import { FunctionComponent, PropsWithChildren } from "react";
 
 interface Props {
   onClick?: () => void;
-  isLoading?: boolean;
-  style?: "default" | "outline" | "no-background";
-  icon?: string;
 }
 
 const Button: FunctionComponent<PropsWithChildren<Props>> = (props) => (

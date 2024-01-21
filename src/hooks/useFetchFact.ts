@@ -27,5 +27,6 @@ export const useFatchFact = () => {
     return {
         isLoading,
         data,
+        refetch
     };
 };

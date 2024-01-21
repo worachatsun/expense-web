@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback, useState } from "react";
 import { Input, Select } from "../../components/core/Input";
-import { useFatchFact } from "../../hooks/useFatchFact";
+import { useFatchFact } from "../../hooks/useFetchFact";
 import { Loading } from "../../components/core/Loading";
 import { FormProps, RowProps } from "./types";
 import { mapRowData } from "./utils";
@@ -35,7 +35,6 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
         ...prevFormData,
         [name]: value,
       }));
-      console.log(formData);
     },
     []
   );
@@ -99,7 +98,10 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
             {isLoading ? (
               <Loading />
             ) : (
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              <p
+                data-testid="cat-fact"
+                className="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+              >
                 Random cat fact: {data?.fact}
               </p>
             )}

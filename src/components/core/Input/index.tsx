@@ -8,13 +8,13 @@ interface BaseProps {
   required?: boolean;
 }
 
-interface Props extends BaseProps {
+export interface Props extends BaseProps {
   type: "text" | "number";
   aria?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-interface SelectProps extends BaseProps {
+export interface SelectProps extends BaseProps {
   options: { title: string; value: string }[];
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -29,7 +29,9 @@ export const Input: FunctionComponent<Props> = memo(
         {title}
       </label>
       <input
+        id="input-id"
         type={type}
+        data-testid={title}
         aria-describedby={aria}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder={placeholder}
@@ -55,6 +57,7 @@ export const Select: FunctionComponent<SelectProps> = memo(
       <select
         onChange={onChange}
         name={name}
+        data-testid={title}
         required={required}
         defaultValue="Food"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

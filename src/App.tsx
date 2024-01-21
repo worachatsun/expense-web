@@ -1,5 +1,5 @@
 import "./App.css";
-import { ModalProvider } from "./components/core/Modal/ModalProvider";
+import { ModalProvider } from "./contexts/ModalProvider";
 import Landing from "./pages/Landing";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

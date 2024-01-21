@@ -35,7 +35,9 @@ const Table: FunctionComponent<Props> = ({
             >
               <Td>
                 <input
+                  data-testid={key}
                   type="checkbox"
+                  aria-checked={checkedList.has(key)}
                   defaultChecked={checkedList.has(key)}
                   onChange={() => onChecked(key)}
                   className="accent-pink-500"

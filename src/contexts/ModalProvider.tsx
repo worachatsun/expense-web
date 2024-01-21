@@ -1,5 +1,5 @@
 import { FunctionComponent, PropsWithChildren, useState } from "react";
-import { MODAL_TYPES } from "./constants";
+import { MODAL_TYPES } from "../components/core/Modal/constants";
 import { ModalContext } from "./ModalContext";
 
 interface ModalState {

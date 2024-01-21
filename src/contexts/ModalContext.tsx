@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { MODAL_TYPES } from "./constants";
+import { MODAL_TYPES } from "../components/core/Modal/constants";
 
 interface ModalContext {
   isOpen: (modalIdentifier: MODAL_TYPES) => boolean;
