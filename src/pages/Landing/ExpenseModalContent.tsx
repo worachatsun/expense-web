@@ -2,9 +2,12 @@ import { FunctionComponent, useState } from "react";
 import { Input, Select } from "../../components/core/Input";
 import { useFatchFact } from "../../hooks/useFatchFact";
 import { Loading } from "../../components/core/Loading";
+import { FormProps, RowProps } from "./types";
+import { mapRowData } from "./utils";
 
 interface Props {
   onCloseModal: () => void;
+  onAddRow: (row: RowProps) => void;
 }
 
 const options = [
@@ -16,11 +19,12 @@ const options = [
 
 export const ExpenseModalContent: FunctionComponent<Props> = ({
   onCloseModal,
+  onAddRow,
 }) => {
   const { data, isLoading } = useFatchFact();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormProps>({
     item: "",
-    category: "",
+    category: "Food",
     amount: 0,
   });
 
@@ -36,7 +40,8 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
+    onAddRow(mapRowData(formData));
+    onCloseModal();
   };
 
   return (
@@ -51,6 +56,7 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
                 placeholder="Item Name"
                 onChange={handleInputChange}
                 name="item"
+                required
               />
               <Select
                 title="Category:"
@@ -58,6 +64,7 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
                 placeholder="Choose a category"
                 onChange={handleInputChange}
                 name="category"
+                required
               />
               <Input
                 title="Amount:"
@@ -65,6 +72,7 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
                 placeholder="Item amount"
                 onChange={handleInputChange}
                 name="amount"
+                required
               />
               <button
                 data-modal-hide="static-modal"

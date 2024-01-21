@@ -22,7 +22,10 @@ const Table: FunctionComponent<Props> = ({ rows, headers }) => {
         </thead>
         <tbody>
           {rows.map(({ key, cols }) => (
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr
+              key={key}
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+            >
               {cols.map((col) => (
                 <Td key={key}>{col}</Td>
               ))}

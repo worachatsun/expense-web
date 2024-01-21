@@ -1,21 +1,30 @@
-import { FunctionComponent, useCallback, useMemo } from "react";
+import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { Button } from "../../components/core/Button";
 import { Table } from "../../components/core/Table";
 import { Modal } from "../../components/core/Modal";
 import { MODAL_TYPES } from "../../components/core/Modal/constants";
 import { useModalContext } from "../../hooks/useModalContext";
 import { ExpenseModalContent } from "./ExpenseModalContent";
-
-export interface RowProps {
-  key: string;
-  checkbox: JSX.Element;
-  item: string;
-  category: string;
-  amount: string;
-}
+import { RowProps } from "./types";
 
 const Landing: FunctionComponent = () => {
   const { setIsOpen } = useModalContext();
+  const [rows, setRows] = useState<RowProps[]>([
+    {
+      key: "default",
+      cols: [
+        <input type="checkbox" className="accent-pink-500" checked />,
+        "Whiskers Cat food",
+        "Food",
+        "10$",
+      ],
+    },
+  ]);
+
+  const onUpdateRows = (row: RowProps) => {
+    setRows((prevFormData) => [...prevFormData, row]);
+  };
+
   const onAddExoenseClicked = useCallback(
     () => setIsOpen(true, MODAL_TYPES.ADD_EXPENSE),
     [setIsOpen]
@@ -24,26 +33,6 @@ const Landing: FunctionComponent = () => {
   const ExpenseTable = () =>
     useMemo(() => {
       const headers: string[] = ["", "Items", "Category", "Amount"];
-      const rows = [
-        {
-          key: "checkbox",
-          cols: [
-            <input type="checkbox" className="accent-pink-500" checked />,
-            "Whiskers Cat food",
-            "Food",
-            "10$",
-          ],
-        },
-        {
-          key: "checkbox",
-          cols: [
-            <input type="checkbox" className="accent-pink-500" checked />,
-            "Whiskers Cat food",
-            "Food",
-            "10$",
-          ],
-        },
-      ];
       return <Table rows={rows} headers={headers} />;
     }, []);
 
@@ -57,7 +46,10 @@ const Landing: FunctionComponent = () => {
       </div>
       <Modal modalIdentifier={MODAL_TYPES.ADD_EXPENSE}>
         {({ onCloseModal }) => (
-          <ExpenseModalContent onCloseModal={onCloseModal} />
+          <ExpenseModalContent
+            onCloseModal={onCloseModal}
+            onAddRow={onUpdateRows}
+          />
         )}
       </Modal>
     </>
