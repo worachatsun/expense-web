@@ -9,20 +9,26 @@ import { RowProps } from "./types";
 
 const Landing: FunctionComponent = () => {
   const { setIsOpen } = useModalContext();
+  const [checkedList, setCheckedList] = useState<Set<string>>(new Set());
   const [rows, setRows] = useState<RowProps[]>([
     {
       key: "default",
-      cols: [
-        <input type="checkbox" className="accent-pink-500" checked />,
-        "Whiskers Cat food",
-        "Food",
-        "10$",
-      ],
+      checked: false,
+      cols: ["Whiskers Cat food", "Food", "10$"],
     },
   ]);
 
   const onUpdateRows = (row: RowProps) => {
     setRows((prevFormData) => [...prevFormData, row]);
+  };
+
+  const onChecked = (key: string) => {
+    if (checkedList.has(key)) checkedList.delete(key);
+    else setCheckedList(checkedList.add(key));
+  };
+
+  const onRemoveSelected = () => {
+    setRows(rows.filter((row) => !checkedList.has(row.key)));
   };
 
   const onAddExoenseClicked = useCallback(
@@ -33,7 +39,14 @@ const Landing: FunctionComponent = () => {
   const ExpenseTable = () =>
     useMemo(() => {
       const headers: string[] = ["", "Items", "Category", "Amount"];
-      return <Table rows={rows} headers={headers} />;
+      return (
+        <Table
+          rows={rows}
+          headers={headers}
+          onChecked={onChecked}
+          checkedList={checkedList}
+        />
+      );
     }, []);
 
   return (
@@ -42,7 +55,7 @@ const Landing: FunctionComponent = () => {
       <ExpenseTable />
       <div className="flex justify-between mt-5">
         <Button onClick={onAddExoenseClicked}>Add Expense</Button>
-        <Button>Delete Expense</Button>
+        <Button onClick={onRemoveSelected}>Delete Expense</Button>
       </div>
       <Modal modalIdentifier={MODAL_TYPES.ADD_EXPENSE}>
         {({ onCloseModal }) => (

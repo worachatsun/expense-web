@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 export interface RowProps {
     key: string;
+    checked: boolean;
     cols: ReactNode[];
 }
 
