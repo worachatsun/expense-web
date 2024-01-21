@@ -46,7 +46,10 @@ export const ExpenseModalContent: FunctionComponent<Props> = ({
   };
 
   return (
-    <div className="relative p-4 w-full max-w-2xl max-h-full">
+    <div
+      data-testid="modal"
+      className="relative p-4 w-full max-w-2xl max-h-full"
+    >
       <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <div className="flex justify-between p-4 md:p-5 space-y-4 w-full">
           <div className="w-6/12">
